@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 // API endpoint to fetch the list of HTML files from the /projects directory
-const API_URL = 'http://localhost:3000/api/projects';
+const API_URL = '/api/projects';
 
 // Reactive variables
 const projects = ref([]);
