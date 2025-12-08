@@ -7,25 +7,17 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
+app.use('/projects', express.static('projects'));
 
-app.get('/api/folders', (req, res) => {
-  const rootPath = './';
-  fs.readdir(rootPath, { withFileTypes: true }, (err, files) => {
+app.get('/api/projects', (req, res) => {
+  const projectsPath = './projects';
+  fs.readdir(projectsPath, (err, files) => {
     if (err) {
       res.status(500).send('Error reading directory');
       return;
     }
-    const folders = files
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name)
-      .filter(name => /^\d{2}\.\d{2}\.\d{4}$/.test(name))
-      .sort((a, b) => {
-        const [dayA, monthA, yearA] = a.split('.').map(Number);
-        const [dayB, monthB, yearB] = b.split('.').map(Number);
-        return new Date(yearA, monthA - 1, dayA) - new Date(yearB, monthB - 1, dayB);
-      })
-      .map(name => name.replace(/\./g, '/'));
-    res.json(folders);
+    const htmlFiles = files.filter(file => file.endsWith('.html'));
+    res.json(htmlFiles);
   });
 });
 
