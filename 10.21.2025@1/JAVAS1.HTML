@@ -1,11 +1,38 @@
-<!doctype html>
-<html>
-<head>
-    <title>Εισαγωγή στην JavaScript</title>
-</head>
-<body>
-    <button onclick="document.getElementById('image').src='http://www.w3schools.com/js/pic_bulboN.gif'"> Turn on the light</button>
-    <img id="image" src="http://www.w3schools.com/js/pic_bulboff.gif" style="width:100px">
-    <button onclick="document.getElementById('image').src='http://www.w3schools.com/js/pic_bulboff.gif'">Turn off the light</button>
-</body>
-</html>
+      <!doctype html>
+      <html>
+      <head>
+          <meta charset="UTF-8">
+          <title>  JavaScript</title>
+      </head>
+      <body>
+          <button onclick="startBlinking()">Start blinking</button>
+          <img id="image" src="http://www.w3schools.com/js/pic_bulboff.gif" style="width:100px">
+          <button onclick="stopBlinking()">Stop blinking</button>
+      </body>
+      <script>
+          let intervalId;
+          let isLightOn = false;
+
+          function toggleLight() {
+              const image = document.getElementById('image');
+              if (isLightOn) {
+                  image.src = 'http://www.w3schools.com/js/pic_bulboff.gif';
+              } else {
+                  image.src = 'http://www.w3schools.com/js/pic_bulbon.gif';
+              }
+              isLightOn = !isLightOn;
+          }
+
+          function startBlinking() {
+              if (!intervalId) { 
+                  intervalId = setInterval(toggleLight, 1000);
+              }
+          }
+
+          function stopBlinking() {
+              clearInterval(intervalId);
+              intervalId = null;
+          }
+      
+      </script>
+      </html>
