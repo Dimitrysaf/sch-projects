@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title> Δραστηριότητα JavaScript : Number Range</title>
+    </head>
+<body>
+
+    <div class="container">
+        <h2>Εμφάνιση Εύρους Αριθμών</h2>
+        Από: <input type="number" id="startNum">
+        Έως: <input type="number" id="endNum">
+        <button onclick="generateRange()">Εμφάνιση</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function generateRange() {
+            let start = document.getElementById("startNum").value;
+            let end = document.getElementById("endNum").value;
+
+            document.getElementById("result").innerHTML = "";
+
+            for (let i = start; i <= end; i++) {
+                document.getElementById("result").innerHTML += i + "<br>";
+                }
+            }
+    </script>
+
+</body>
+</html>
