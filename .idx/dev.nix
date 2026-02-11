@@ -1,37 +1,41 @@
-{ pkgs, ... }:
-{
-  # Specifies the Nixpkgs channel to use.
-  channel = "stable-24.05"; 
+{ pkgs, ... }: {
+  # The nixpkgs channel to use.
+  channel = "stable-24.05"; # or "unstable"
 
-  # A list of packages to make available in your environment.
+  # A list of packages to install, from the channel.
+  # You can search for packages on the NixOS package search: https://search.nixos.org/packages
   packages = [
+    pkgs.tree # Add tree for directory listing
   ];
 
-  # VS Code extensions to install.
-  idx = {
-    extensions = [
-      "google.gemini-cli-vscode-ide-companion"
-      "Vue.volar"
-      "ritwickdey.LiveServer"
-    ];
+  # A set of environment variables to be defined in the workspace.
+  # env = {
+  #   API_KEY = "your-secret-key";
+  # };
 
-    # Web previews for your application.
-    # The npm-based preview has been removed. You can use the Live Server extension
-    # by right-clicking an HTML file and selecting "Open with Live Server".
+  # A list of VS Code extensions to be installed in the workspace, from the Open VSX Registry.
+  # You can search for extensions on the registry: https://open-vsx.org/
+  # idx.extensions = [
+  #   "vscodevim.vim"
+  #   "golang.go"
+  # ];
+
+  # Specifies the workspace's lifecycle hooks.
+  idx.workspace = {
+    # Runs when a workspace is first created.
+    onCreate = {};
+    # Runs every time the workspace is (re)started.
+    onStart = {};
+  };
+
+  # Configures a web preview for your application.
+  idx.previews = {
+    enable = true;
     previews = {
-      enable = false;
-      previews = {};
-    };
-
-    # Workspace lifecycle hooks.
-    workspace = {
-      # Runs when a workspace is first created.
-      onCreate = {
-        default.openFiles = [ ".idx/dev.nix" "README.md" ];
-      };
-      # Runs every time the workspace is (re)started.
-      onStart = {
-        "generate-launcher" = "./generate_launcher.sh";
+      # The launcher app
+      launcher = {
+        command = ["npx" "serve" "." "--port" "$PORT"];
+        manager = "web";
       };
     };
   };

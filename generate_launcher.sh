@@ -1,4 +1,5 @@
 #!/bin/bash
+
 LAUNCHER_FILE="launcher.html"
 CSS_FILE="launcher.css"
 JS_FILE="launcher.js"
@@ -12,7 +13,11 @@ LINKS=$(find . -type f -iname "*.html" | grep -v "launcher.html" | sed 's|^\./||
     fi
     # Get modification date in YYYY-MM-DD format
     mod_date=$(stat -c %y "$line" | cut -d' ' -f1)
-    echo "        <li data-name=\"$folder\" data-date=\"$mod_date\"><a href=\"$line\" target=\"_blank\">$folder</a><br><small>$line</small></li>"
+    # Get folder size
+    folder_size=$(du -sh "$folder" | cut -f1)
+    # Get file count
+    file_count=$(find "$folder" -type f | wc -l)
+    echo "        <li data-name=\"$folder\" data-date=\"$mod_date\"><a href=\"$line\" target=\"_blank\">$folder</a><br><small>$line</small><div class=\"info\"><div class=\"info-box\">Size: $folder_size<br>Files: $file_count<br>Modified: $mod_date</div></div></li>"
 done)
 
 # Create the launcher.html file
@@ -26,11 +31,11 @@ cat > "$LAUNCHER_FILE" <<EOF
     <link rel="stylesheet" href="$CSS_FILE">
 </head>
 <body>
-    <h1>Project Launcher</h1>
+    <h1>Launcher</h1>
     <div class="filter-container">
         <input type="text" id="nameFilter" placeholder="Filter by name...">
         <input type="date" id="dateFilter">
-        <button id="sortButton">Sort</button>
+        <button id="sortButton">Newest</button>
     </div>
     <ul id="linkList">
 $LINKS

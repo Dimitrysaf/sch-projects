@@ -6,6 +6,10 @@ const listItems = Array.from(linkList.getElementsByTagName('li'));
 
 let sortOrder = 'desc'; // 'desc' for newest to oldest, 'asc' for oldest to newest
 
+function updateButtonText() {
+    sortButton.textContent = sortOrder === 'desc' ? 'Newest' : 'Oldest';
+}
+
 function filterLinks() {
     const nameValue = nameFilter.value.toLowerCase();
     const dateValue = dateFilter.value;
@@ -43,12 +47,22 @@ function sortLinks() {
 
 function toggleSort() {
     sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+    updateButtonText();
     sortLinks();
 }
 
-// Initial sort
+// Initial setup
 sortLinks();
+updateButtonText();
 
 nameFilter.addEventListener('keyup', filterLinks);
 dateFilter.addEventListener('change', filterLinks);
 sortButton.addEventListener('click', toggleSort);
+
+// Add info button listeners
+document.querySelectorAll('.info-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const infoBox = e.target.nextElementSibling;
+        infoBox.style.display = infoBox.style.display === 'block' ? 'none' : 'block';
+    });
+});
