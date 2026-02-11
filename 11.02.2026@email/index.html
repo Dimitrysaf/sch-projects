@@ -2,13 +2,44 @@
 <html>
 
 <body>
-    <h2>What Can JavaScript Do?</h2>
-    <p>JavaScript can change HTML attribute values.</p>
-    <p>In this case JavaScript changes the value of the src (source) attribute of an image.</p>
+    <div>
+        <button onclick="plus()">+</button>
+        <button onclick="minus()">-</button>
+        <button onclick="reset()">Reset</button>
+        <button onclick="randomPic()">RandomPic</button>
+    </div>
+    <br>
     <img id="myImage" src="without_money.png" style="width:500px">
-    <button onclick="document.getElementById('myImage').src='with_money.png'">Πριν το 2010</button>
-    <button onclick="document.getElementById('myImage').src='without_money.png'">Μέσα στα 2010 - 2015</button>
-    <button onclick="document.getElementById('myImage').src='with_money.png'">Μετά το 2015</button>
 </body>
+<script>
+    let size = 500;
+    let pic1 = "pic_bulboff.gif"
+    let pic2 = "pic_bulbon.gif"
+    let pic3 = "with_money.png"
+    let pic4 = "without_money.png"
+    let pic5 = "after.png"
+    let pic6 = "before.png"
+
+    function plus() {
+        size += 20;
+        myImage.style.width = size + "px";
+    }
+
+    function minus() {
+        size -= 20;
+        myImage.style.width = size + "px";
+    }
+
+    function reset() {
+        size = 500;
+        myImage.style.width = size + "px";
+    }
+
+    function randomPic() {
+        let pics = [pic1, pic2, pic3, pic4, pic5, pic6];
+        let randomIndex = Math.floor(Math.random() * pics.length);
+        myImage.src = pics[randomIndex];
+    }
+</script>
 
 </html>
