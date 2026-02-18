@@ -6,19 +6,14 @@
         <button onclick="plus()">+</button>
         <button onclick="minus()">-</button>
         <button onclick="reset()">Reset</button>
-        <button onclick="randomPic()">RandomPic</button>
+        <button onclick="randomPic()">Random</button>
     </div>
     <br>
     <img id="myImage" src="without_money.png" style="width:500px">
 </body>
 <script>
     let size = 500;
-    let pic1 = "pic_bulboff.gif"
-    let pic2 = "pic_bulbon.gif"
-    let pic3 = "with_money.png"
-    let pic4 = "without_money.png"
-    let pic5 = "after.png"
-    let pic6 = "before.png"
+    let pics = ["pic_bulboff.gif", "pic_bulbon.gif", "with_money.png", "without_money.png", "after.png", "before.png"];
 
     function plus() {
         size += 20;
@@ -36,9 +31,8 @@
     }
 
     function randomPic() {
-        let pics = [pic1, pic2, pic3, pic4, pic5, pic6];
-        let randomIndex = Math.floor(Math.random() * pics.length);
-        myImage.src = pics[randomIndex];
+        let random = Math.floor(Math.random() * pics.length);
+        myImage.src = pics[random];
     }
 </script>
 

@@ -1,12 +1,15 @@
 { pkgs, ... }: {
   # The nixpkgs channel to use.
-  channel = "stable-24.05"; # or "unstable"
+  channel = "unstable"; # or "unstable"
 
   # A list of packages to install, from the channel.
   # You can search for packages on the NixOS package search: https://search.nixos.org/packages
   packages = [
-    pkgs.tree # Add tree for directory listing
+    pkgs.tree
     pkgs.nodejs_20
+    pkgs.phpactor
+    pkgs.php
+    pkgs.php84
   ];
 
   # A set of environment variables to be defined in the workspace.
@@ -37,6 +40,11 @@
       # The launcher app
       launcher = {
         command = ["npx" "live-server" "launcher.html" "--port=$PORT"];
+        manager = "web";
+      };
+      # The PHP server
+      php-server = {
+        command = ["php" "-S" "0.0.0.0:$PORT"];
         manager = "web";
       };
     };

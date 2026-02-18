@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Άθροισμα Αριθμών</title>
+</head>
+
+<body>
+    <h2>Υπολογισμός Αθροίσματος</h2>
+
+    <!-- Τα δύο πεδία εισαγωγής -->
+    <input type="number" id="num1" placeholder="1ος αριθμός">
+    <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="number" id="num2" placeholder="2ος αριθμός"> =
+    <input type="number" id="result" disabled placeholder="Αποτέλεσμα">
+    <div>
+        <!-- Το κουμπί που καλεί τη συνάρτηση -->
+        <button onclick="calculateSum()">Εκτέλεση</button>
+        <button onclick="resetForm()">Επαναφορά</button>
+    </div>
+
+    <script>
+        function resetForm() {
+            document.getElementById("form").reset();
+        }
+
+        function calculateSum() {
+            // Λήψη των τιμών από τα inputs μέσω των ID τους
+            let val1 = document.getElementById("num1").value;
+            let val2 = document.getElementById("num2").value;
+            let operator = document.getElementById("operator").value;
+            let result;
+
+            // Μετατροπή των κειμένων σε αριθμούς και πρόσθεση
+            if (operator === "+") {
+                result = Number(val1) + Number(val2);
+            } else if (operator === "-") {
+                result = Number(val1) - Number(val2);
+            } else if (operator === "*") {
+                result = Number(val1) * Number(val2);
+            } else if (operator === "/") {
+                result = Number(val1) / Number(val2);
+            }
+
+            // Εμφάνιση του αποτελέσματος
+            document.getElementById("result").value = result;
+        }
+    </script>
+
+</body>
+
+</html>
