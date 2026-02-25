@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <form>
+    <form id="form" action="result.php" method="post">
         <fieldset>
             <legend>Information</legend>
             <label for="fname">First Name:</label>
@@ -36,6 +36,9 @@
         </fieldset>
         <fieldset>
             <legend>Options</legend>
+            <input type="checkbox" name="cookies" id="cookies">
+            <label for="cookies">I accept the cookies</label>
+            <br>
             <input type="submit" value="Submit">
             <input type="reset" value="Reset">
         </fieldset>

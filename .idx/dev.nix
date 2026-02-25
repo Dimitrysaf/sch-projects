@@ -10,6 +10,7 @@
     pkgs.phpactor
     pkgs.php
     pkgs.php84
+    pkgs.php84Packages.php-codesniffer
   ];
 
   # A set of environment variables to be defined in the workspace.
