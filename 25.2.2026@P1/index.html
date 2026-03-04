@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+</head>
+
+<body>
+    <form action="result.php" method="post" enctype="multipart/form-data">
+        <h3>Παράδειγμα Πλήρους Φόρμας</h3>
+        <label for="name">Όνομα: </label>
+        <input type="text" id="name" name="name">
+        <br><br>
+        <label for="pass">Κωδικός: </label>
+        <input type="password" id="pass" name="pass">
+        <br><br>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email">
+        <br><br>
+        <label for="age">Ηλικία: </label>
+        <input type="number" id="age" name="age">
+        <br><br>
+        <label for="phone">Τηλέφωνο: </label>
+        <input type="tel" id="phone" name="phone">
+        <br><br>
+        <label for="website">Ιστοσελίδα: </label>
+        <input type="url" id="website" name="website">
+        <br><br>
+        <label for="dob">Ημεροηνία Γέννησης: </label>
+        <input type="date" id="dob" name="dob">
+        <br><br>
+        <label for="time">Ώρα: </label>
+        <input type="time" id="time" name="time">
+        <br><br>
+        <label for="color">Επίλεξε Χρώμα: </label>
+        <input type="color" id="color" name="color">
+        <br><br>
+        <label for="volume">Ένταση: </label>
+        <input type="range" id="volume" name="volume">
+        <br><br>
+        <label for="gender">Φύλο: </label>
+        <br><br>
+        <input type="radio" id="male" name="gender" value="Άνδρας">
+        <label for="male">Άνδρας</label>
+        <input type="radio" id="female" name="gender" value="Γυναίκα">
+        <label for="female">Γυναίκα</label>
+        <br><br>
+        <input type="checkbox" id="checkbox" name="checkbox">
+        <label for="checkbox">Αποδέχομαι τους όρους </label>
+        <br><br>
+        <label for="fileup">Ανέβασμα αρχείου: </label>
+        <input type="file" id="fileup" name="fileup">
+        <br><br>
+        <label for="country">Χώρα: </label>
+        <select id="country" name="country">
+            <option value="gr">Ελλάδα</option>
+            <option value="else">Αλλού</option>
+        </select>
+        <br><br>
+        <label for="textarea">Μήνυμα: </label><br>
+        <textarea id="textarea" name="textarea"></textarea>
+        <br><br>
+        <input type="submit" value="Υποβολή">
+        <input type="reset" value="Καθαρισμός">
+        <input type="button" value="Απλό κουμπί">
+    </form>
+</body>
+
+</html>

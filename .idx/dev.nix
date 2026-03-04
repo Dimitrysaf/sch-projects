@@ -7,10 +7,11 @@
   packages = [
     pkgs.tree
     pkgs.nodejs_20
-    pkgs.phpactor
     pkgs.php
-    pkgs.php84
-    pkgs.php84Packages.php-codesniffer
+    pkgs.phpPackages.composer
+    pkgs.phpPackages.php-codesniffer
+    pkgs.phpExtensions.mbstring
+    pkgs.phpExtensions.tokenizer
   ];
 
   # A set of environment variables to be defined in the workspace.
@@ -39,12 +40,12 @@
     enable = true;
     previews = {
       # The launcher app
-      launcher = {
+      "launcher" = {
         command = ["npx" "live-server" "launcher.html" "--port=$PORT"];
         manager = "web";
       };
       # The PHP server
-      php-server = {
+      "php-server" = {
         command = ["php" "-S" "0.0.0.0:$PORT"];
         manager = "web";
       };
