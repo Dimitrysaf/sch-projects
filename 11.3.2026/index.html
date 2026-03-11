@@ -77,8 +77,7 @@
     <script>
         let score = 0;
         let timeLeft = 20;
-        let timerInterval;
-        let ballInterval;
+        let gameInterval;
         const ball = document.getElementById('ball');
         const scoreDisplay = document.getElementById('score');
         const timerDisplay = document.getElementById('timer');
@@ -99,40 +98,29 @@
             scoreDisplay.textContent = score;
             moveBall(); // Η μπάλα αλλάζει θέση αμέσως μόλις την πατήσεις
         });
-        
-        function setBallSpeed() {
-            clearInterval(ballInterval);
-            
-            // As timeLeft gets smaller, the interval duration also gets smaller, so the ball moves faster.
-            const intervalDuration = 200 + (timeLeft * 50); // from 1200ms down to 250ms
-
-            ballInterval = setInterval(moveBall, intervalDuration);
-        }
 
         function startGame() {
             score = 0;
-            timeLeft = 20;
+            timeLeft = 40;
             scoreDisplay.textContent = score;
             timerDisplay.textContent = timeLeft;
             startBtn.disabled = true;
 
-            moveBall(); // Initial position
-            setBallSpeed();
+            moveBall();
 
-            timerInterval = setInterval(() => {
+            // Κίνηση μπάλας κάθε 1 δευτερόλεπτο αυτόματα
+            gameInterval = setInterval(() => {
                 timeLeft--;
                 timerDisplay.textContent = timeLeft;
-                
-                setBallSpeed(); // Update speed every second
+                moveBall();
 
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    clearInterval(ballInterval);
+                    clearInterval(gameInterval);
                     ball.style.display = 'none';
                     startBtn.disabled = false;
                     alert("Τέλος Χρόνου! Το σκορ σου είναι: " + score);
                 }
-            }, 1000);
+            }, 1300 - (score * 100));
         }
     </script>
 </body>
