@@ -19,12 +19,22 @@
             position: relative;
             background: white;
             overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        #final-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 48px;
+            display: none; /* Hidden by default */
         }
 
         #ball {
             width: 40px;
             height: 40px;
-            background: red;
             border-radius: 50%;
             position: absolute;
             cursor: pointer;
@@ -37,7 +47,6 @@
         }
 
         .stats {
-            font-size: 20px;
             font-weight: bold;
         }
 
@@ -70,6 +79,7 @@
     <h1>Πιάσε τη Μπάλα!</h1>
     <div class="stats">Σκορ: <span id="score">0</span> | Χρόνος: <span id="timer">20</span>s</div>
     <div id="game-area">
+        <div id="final-score"></div>
         <div id="ball"></div>
     </div>
     <button id="start-btn" onclick="startGame()">Έναρξη Παιχνιδιού</button>
@@ -77,50 +87,105 @@
     <script>
         let score = 0;
         let timeLeft = 20;
-        let gameInterval;
+        let timerInterval;
+        let ballMoveTimeout;
         const ball = document.getElementById('ball');
+        const gameArea = document.getElementById('game-area');
         const scoreDisplay = document.getElementById('score');
+        const finalScoreDisplay = document.getElementById('final-score');
         const timerDisplay = document.getElementById('timer');
         const startBtn = document.getElementById('start-btn');
 
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getIntervalTime() {
+            let interval = 2000 - (score * 60);
+            if (interval < 800) {
+                return 800;
+            }
+            return interval;
+        }
+
         function moveBall() {
-            // Υπολογισμός τυχαίας θέσης εντός του game-area
-            const x = Math.floor(Math.random() * 460); // 500 - πλάτος μπάλας
-            const y = Math.floor(Math.random() * 360); // 400 - ύψος μπάλας
+            const x = Math.floor(Math.random() * (gameArea.clientWidth - ball.clientWidth));
+            const y = Math.floor(Math.random() * (gameArea.clientHeight - ball.clientHeight));
 
             ball.style.left = x + 'px';
             ball.style.top = y + 'px';
             ball.style.display = 'block';
+            ball.style.backgroundColor = getRandomColor();
         }
 
-        ball.addEventListener('click', () => {
-            score++;
-            scoreDisplay.textContent = score;
-            moveBall(); // Η μπάλα αλλάζει θέση αμέσως μόλις την πατήσεις
+        function ballLoop() {
+            if (timeLeft <= 0) return;
+            moveBall();
+            const intervalTime = getIntervalTime();
+            ballMoveTimeout = setTimeout(ballLoop, intervalTime);
+        }
+
+        gameArea.addEventListener('click', () => {
+            if (timeLeft > 0) {
+                score -= 1;
+                updateScore();
+            }
         });
+
+        ball.addEventListener('click', (event) => {
+            event.stopPropagation();
+            if (timeLeft > 0) {
+                score += 2;
+                updateScore();
+                clearTimeout(ballMoveTimeout);
+                ballLoop();
+            }
+        });
+
+        function updateScore() {
+            scoreDisplay.textContent = score;
+        }
 
         function startGame() {
             score = 0;
-            timeLeft = 40;
-            scoreDisplay.textContent = score;
+            timeLeft = 20;
+            updateScore();
             timerDisplay.textContent = timeLeft;
             startBtn.disabled = true;
+            finalScoreDisplay.style.display = 'none';
+            gameArea.style.backgroundColor = 'white'; // Game area is white during the game
 
-            moveBall();
+            clearInterval(timerInterval);
+            clearTimeout(ballMoveTimeout);
 
-            // Κίνηση μπάλας κάθε 1 δευτερόλεπτο αυτόματα
-            gameInterval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 timeLeft--;
                 timerDisplay.textContent = timeLeft;
-                moveBall();
 
                 if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
+                    clearInterval(timerInterval);
+                    clearTimeout(ballMoveTimeout);
                     ball.style.display = 'none';
                     startBtn.disabled = false;
-                    alert("Τέλος Χρόνου! Το σκορ σου είναι: " + score);
+                    
+                    finalScoreDisplay.textContent = score;
+                    finalScoreDisplay.style.display = 'block';
+                    
+                    // Set final background color based on score
+                    if (score < 0) {
+                        gameArea.style.backgroundColor = 'lightcoral';
+                    } else {
+                        gameArea.style.backgroundColor = 'lightgreen';
+                    }
                 }
-            }, 1300 - (score * 100));
+            }, 1000);
+            
+            ballLoop();
         }
     </script>
 </body>

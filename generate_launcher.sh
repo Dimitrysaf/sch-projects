@@ -47,7 +47,7 @@ while IFS= read -r line; do
     if [ -n "$php_file" ]; then
         PHP_PORT=$(cat "$PHP_PORT_FILE")
         php_badge="<span class=\"php-badge\">PHP :$PHP_PORT</span>"
-        href="__IDX_ORIGIN_${PHP_PORT}__/$line"
+        href="__IDX_ORIGIN_${PHP_PORT}__/"
         echo $((PHP_PORT + 1)) > "$PHP_PORT_FILE"
     fi
 
