@@ -31,7 +31,7 @@
     onCreate = {};
     # Runs every time the workspace is (re)started.
     onStart = {
-      generate-launcher = "./generate_launcher.sh";
+      generate-launcher = "./generate_launcher.sh && node server.js";
     };
   };
 

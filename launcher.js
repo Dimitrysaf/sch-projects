@@ -1,6 +1,7 @@
 const nameFilter = document.getElementById('nameFilter');
 const dateFilter = document.getElementById('dateFilter');
 const sortButton = document.getElementById('sortButton');
+const refreshButton = document.getElementById('refreshButton');
 const linkList = document.getElementById('linkList');
 const listItems = Array.from(linkList.getElementsByTagName('li'));
 
@@ -17,7 +18,7 @@ function filterLinks() {
     listItems.forEach(item => {
         const name = item.getAttribute('data-name').toLowerCase();
         const date = item.getAttribute('data-date');
-        
+
         const nameMatch = name.includes(nameValue);
         const dateMatch = !dateValue || date === dateValue;
 
@@ -51,6 +52,28 @@ function toggleSort() {
     sortLinks();
 }
 
+async function triggerRefresh() {
+    refreshButton.textContent = 'Running...';
+    refreshButton.disabled = true;
+
+    try {
+        const res = await fetch('/refresh', { method: 'POST' });
+        const data = await res.json();
+        if (data.ok) {
+            // Script ran successfully — reload the page to pick up new launcher.html
+            location.reload();
+        } else {
+            alert('Script failed:\n' + data.error);
+            refreshButton.textContent = 'Refresh';
+            refreshButton.disabled = false;
+        }
+    } catch (err) {
+        alert('Could not reach server. Is server.js running?\n\n' + err.message);
+        refreshButton.textContent = 'Refresh';
+        refreshButton.disabled = false;
+    }
+}
+
 // Initial setup
 sortLinks();
 updateButtonText();
@@ -58,6 +81,7 @@ updateButtonText();
 nameFilter.addEventListener('keyup', filterLinks);
 dateFilter.addEventListener('change', filterLinks);
 sortButton.addEventListener('click', toggleSort);
+refreshButton.addEventListener('click', triggerRefresh);
 
 // Add info button listeners
 document.querySelectorAll('.info-btn').forEach(button => {

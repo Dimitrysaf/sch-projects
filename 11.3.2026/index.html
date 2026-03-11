@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Game: Catch the Ball!</title>
+    <style>
+        body {
+            font-family: monospace;
+            text-align: center;
+            background: #f0f0f0;
+        }
+
+        #game-area {
+            width: 500px;
+            height: 400px;
+            border: 3px solid #333;
+            margin: 20px auto;
+            position: relative;
+            background: white;
+            overflow: hidden;
+        }
+
+        #ball {
+            width: 40px;
+            height: 40px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            display: none;
+            transition: transform 0.1s;
+        }
+
+        #ball:active {
+            transform: scale(0.8);
+        }
+
+        .stats {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #start-btn {
+            padding: 0.5rem;
+            border: 2px solid #000;
+            background-color: #fff;
+            font-family: monospace;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        #start-btn:focus {
+            outline: 2px solid #000;
+        }
+
+        #start-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            outline: none;
+        }
+
+        #start-btn:hover {
+            outline: 2px dashed #000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Πιάσε τη Μπάλα!</h1>
+    <div class="stats">Σκορ: <span id="score">0</span> | Χρόνος: <span id="timer">20</span>s</div>
+    <div id="game-area">
+        <div id="ball"></div>
+    </div>
+    <button id="start-btn" onclick="startGame()">Έναρξη Παιχνιδιού</button>
+
+    <script>
+        let score = 0;
+        let timeLeft = 20;
+        let timerInterval;
+        let ballInterval;
+        const ball = document.getElementById('ball');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+        const startBtn = document.getElementById('start-btn');
+
+        function moveBall() {
+            // Υπολογισμός τυχαίας θέσης εντός του game-area
+            const x = Math.floor(Math.random() * 460); // 500 - πλάτος μπάλας
+            const y = Math.floor(Math.random() * 360); // 400 - ύψος μπάλας
+
+            ball.style.left = x + 'px';
+            ball.style.top = y + 'px';
+            ball.style.display = 'block';
+        }
+
+        ball.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = score;
+            moveBall(); // Η μπάλα αλλάζει θέση αμέσως μόλις την πατήσεις
+        });
+        
+        function setBallSpeed() {
+            clearInterval(ballInterval);
+            
+            // As timeLeft gets smaller, the interval duration also gets smaller, so the ball moves faster.
+            const intervalDuration = 200 + (timeLeft * 50); // from 1200ms down to 250ms
+
+            ballInterval = setInterval(moveBall, intervalDuration);
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = 20;
+            scoreDisplay.textContent = score;
+            timerDisplay.textContent = timeLeft;
+            startBtn.disabled = true;
+
+            moveBall(); // Initial position
+            setBallSpeed();
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                
+                setBallSpeed(); // Update speed every second
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    clearInterval(ballInterval);
+                    ball.style.display = 'none';
+                    startBtn.disabled = false;
+                    alert("Τέλος Χρόνου! Το σκορ σου είναι: " + score);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
