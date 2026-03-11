@@ -28,8 +28,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 48px;
-            display: none; /* Hidden by default */
+            font-size: 200px;
+            font-style: bold;
+            display: none;
         }
 
         #ball {
@@ -96,6 +97,7 @@
         const timerDisplay = document.getElementById('timer');
         const startBtn = document.getElementById('start-btn');
 
+        // getRandomColor: Επιστρέφει ένα τυχαίο χρώμα σε δεκαεξαδική μορφή.
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -105,6 +107,7 @@
             return color;
         }
 
+        // getIntervalTime: Υπολογίζει το χρονικό διάστημα για την κίνηση της μπάλας, το οποίο μειώνεται καθώς αυξάνεται το σκορ.
         function getIntervalTime() {
             let interval = 2000 - (score * 60);
             if (interval < 800) {
@@ -113,6 +116,7 @@
             return interval;
         }
 
+        // moveBall: Μετακινεί τη μπάλα σε μια τυχαία θέση μέσα στην περιοχή του παιχνιδιού και αλλάζει το χρώμα της.
         function moveBall() {
             const x = Math.floor(Math.random() * (gameArea.clientWidth - ball.clientWidth));
             const y = Math.floor(Math.random() * (gameArea.clientHeight - ball.clientHeight));
@@ -123,6 +127,7 @@
             ball.style.backgroundColor = getRandomColor();
         }
 
+        // ballLoop: Ξεκινά έναν βρόχο για να μετακινεί τη μπάλα σε τακτά χρονικά διαστήματα.
         function ballLoop() {
             if (timeLeft <= 0) return;
             moveBall();
@@ -130,6 +135,7 @@
             ballMoveTimeout = setTimeout(ballLoop, intervalTime);
         }
 
+        // Event listener for game area click: Μειώνει το σκορ κατά 1 όταν ο παίκτης κάνει κλικ στην περιοχή του παιχνιδιού.
         gameArea.addEventListener('click', () => {
             if (timeLeft > 0) {
                 score -= 1;
@@ -137,6 +143,7 @@
             }
         });
 
+        // Event listener for ball click: Αυξάνει το σκορ κατά 2 όταν ο παίκτης κάνει κλικ στη μπάλα.
         ball.addEventListener('click', (event) => {
             event.stopPropagation();
             if (timeLeft > 0) {
@@ -147,10 +154,12 @@
             }
         });
 
+        // updateScore: Ενημερώνει την εμφάνιση του σκορ.
         function updateScore() {
             scoreDisplay.textContent = score;
         }
 
+        // startGame: Ξεκινά το παιχνίδι, μηδενίζει το σκορ και το χρόνο, και ξεκινά τους χρονοδιακόπτες.
         function startGame() {
             score = 0;
             timeLeft = 20;
@@ -158,7 +167,7 @@
             timerDisplay.textContent = timeLeft;
             startBtn.disabled = true;
             finalScoreDisplay.style.display = 'none';
-            gameArea.style.backgroundColor = 'white'; // Game area is white during the game
+            gameArea.style.backgroundColor = 'white';
 
             clearInterval(timerInterval);
             clearTimeout(ballMoveTimeout);
@@ -176,7 +185,6 @@
                     finalScoreDisplay.textContent = score;
                     finalScoreDisplay.style.display = 'block';
                     
-                    // Set final background color based on score
                     if (score < 0) {
                         gameArea.style.backgroundColor = 'lightcoral';
                     } else {
