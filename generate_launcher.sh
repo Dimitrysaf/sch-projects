@@ -100,7 +100,7 @@ $(printf "%b" "$LINKS")
             <textarea id="sqlInput" rows="4" placeholder="SELECT * FROM users;&#10;INSERT INTO users (name) VALUES ('Alice');"></textarea>
             <div style="display:flex;flex-direction:column;gap:0.5rem;">
                 <button id="runQuery">Run</button>
-                <button id="cheatBtn">? Cheat</button>
+                <button id="cheatBtn">Commands</button>
             </div>
         </div>
         <div id="queryResults"></div>
@@ -111,7 +111,7 @@ $(printf "%b" "$LINKS")
         <div class="modal">
             <div class="modal-header">
                 <h2>MySQL Cheat Sheet</h2>
-                <button id="closeCheat">✕ Close</button>
+                <button id="closeCheat">Close</button>
             </div>
             <div class="cheat-section">
                 <h3>Databases</h3>
