@@ -30,7 +30,11 @@
             mariadb-install-db --user=$(whoami) --datadir=$(pwd)/.mysql/data
           fi
           echo "Starting MariaDB server..."
-          mariadbd --datadir=$(pwd)/.mysql/data --socket=$(pwd)/.mysql/mysql.sock &
+          mariadbd --no-defaults \
+                   --datadir=$(pwd)/.mysql/data \
+                   --socket=$(pwd)/.mysql/mysql.sock \
+                   --pid-file=$(pwd)/.mysql/mysql.pid \
+                   --user=$(whoami) &
         '';
       };
     };

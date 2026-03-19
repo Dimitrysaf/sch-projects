@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
                 return res.end(JSON.stringify({ ok: false, error: 'Invalid JSON' }));
             }
             const socket = path.join(ROOT, '.mysql/mysql.sock');
-            const cmd = `mariadb --no-defaults --socket=${socket} -u root --batch -e ${JSON.stringify(query)}`;
+            const cmd = `mariadb --no-defaults --socket=${socket} --batch -e ${JSON.stringify(query)}`;
             exec(cmd, (err, stdout, stderr) => {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ ok: !err, output: stdout, error: stderr || (err && err.message) }));
