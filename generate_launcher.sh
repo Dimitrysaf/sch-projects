@@ -87,11 +87,69 @@ $(printf "%b" "$LINKS")
     <div id="tab-database" class="tab-content">
         <div class="db-query-area">
             <textarea id="sqlInput" rows="4" placeholder="SHOW DATABASES;&#10;SELECT * FROM mydb.users;"></textarea>
-            <button id="runQuery">Run</button>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <button id="runQuery">Run</button>
+                <button id="cheatBtn">? Cheat</button>
+            </div>
         </div>
         <div id="queryResults"></div>
         <hr class="db-divider">
         <div id="dbTree"></div>
+    </div>
+    <div class="modal-overlay" id="cheatOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>MySQL Cheat Sheet</h2>
+                <button id="closeCheat">✕ Close</button>
+            </div>
+            <div class="cheat-section">
+                <h3>Databases</h3>
+                <div class="cheat-row"><span class="cheat-cmd">SHOW DATABASES;</span><span class="cheat-desc">List all databases</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">CREATE DATABASE name;</span><span class="cheat-desc">Create a new database</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">DROP DATABASE name;</span><span class="cheat-desc">Delete a database</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">USE name;</span><span class="cheat-desc">Select a database</span></div>
+            </div>
+            <div class="cheat-section">
+                <h3>Tables</h3>
+                <div class="cheat-row"><span class="cheat-cmd">SHOW TABLES;</span><span class="cheat-desc">List tables in current DB</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">DESCRIBE table;</span><span class="cheat-desc">Show columns of a table</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">CREATE TABLE t (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));</span><span class="cheat-desc">Create a table</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">DROP TABLE t;</span><span class="cheat-desc">Delete a table</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">ALTER TABLE t ADD col INT;</span><span class="cheat-desc">Add a column</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">ALTER TABLE t DROP COLUMN col;</span><span class="cheat-desc">Remove a column</span></div>
+            </div>
+            <div class="cheat-section">
+                <h3>Querying</h3>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT * FROM t;</span><span class="cheat-desc">Select all rows</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT col1, col2 FROM t WHERE col = 'val';</span><span class="cheat-desc">Filter rows</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT * FROM t ORDER BY col DESC LIMIT 10;</span><span class="cheat-desc">Sort and limit</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT * FROM a JOIN b ON a.id = b.a_id;</span><span class="cheat-desc">Inner join</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT col, COUNT(*) FROM t GROUP BY col;</span><span class="cheat-desc">Group and count</span></div>
+            </div>
+            <div class="cheat-section">
+                <h3>Inserting / Updating / Deleting</h3>
+                <div class="cheat-row"><span class="cheat-cmd">INSERT INTO t (col1, col2) VALUES ('a', 'b');</span><span class="cheat-desc">Insert a row</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">UPDATE t SET col = 'val' WHERE id = 1;</span><span class="cheat-desc">Update rows</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">DELETE FROM t WHERE id = 1;</span><span class="cheat-desc">Delete rows</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">TRUNCATE TABLE t;</span><span class="cheat-desc">Delete all rows, keep structure</span></div>
+            </div>
+            <div class="cheat-section">
+                <h3>Users &amp; Permissions</h3>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT User, Host FROM mysql.user;</span><span class="cheat-desc">List users</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">CREATE USER 'u'@'localhost' IDENTIFIED BY 'pw';</span><span class="cheat-desc">Create a user</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">GRANT ALL ON db.* TO 'u'@'localhost';</span><span class="cheat-desc">Grant privileges</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">FLUSH PRIVILEGES;</span><span class="cheat-desc">Apply privilege changes</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">DROP USER 'u'@'localhost';</span><span class="cheat-desc">Delete a user</span></div>
+            </div>
+            <div class="cheat-section">
+                <h3>Misc</h3>
+                <div class="cheat-row"><span class="cheat-cmd">SHOW PROCESSLIST;</span><span class="cheat-desc">Active queries</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SHOW VARIABLES LIKE 'max_%';</span><span class="cheat-desc">Server variables</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT VERSION();</span><span class="cheat-desc">MariaDB version</span></div>
+                <div class="cheat-row"><span class="cheat-cmd">SELECT DATABASE();</span><span class="cheat-desc">Current database</span></div>
+            </div>
+            <small>Click any command to paste it into the query box.</small>
+        </div>
     </div>
     <script>
     (function () {

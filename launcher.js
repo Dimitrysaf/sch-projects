@@ -186,3 +186,25 @@ async function loadDbTree() {
         treeEl.innerHTML = `<pre class="db-error">Could not reach server.\n${e.message}</pre>`;
     }
 }
+
+// ── Cheat sheet modal ─────────────────────────────────────────────────────────
+const cheatOverlay = document.getElementById('cheatOverlay');
+
+document.getElementById('cheatBtn').addEventListener('click', () => {
+    cheatOverlay.classList.add('open');
+});
+
+document.getElementById('closeCheat').addEventListener('click', () => {
+    cheatOverlay.classList.remove('open');
+});
+
+cheatOverlay.addEventListener('click', (e) => {
+    if (e.target === cheatOverlay) cheatOverlay.classList.remove('open');
+});
+
+document.querySelectorAll('.cheat-cmd').forEach(el => {
+    el.addEventListener('click', () => {
+        document.getElementById('sqlInput').value = el.textContent;
+        cheatOverlay.classList.remove('open');
+    });
+});
