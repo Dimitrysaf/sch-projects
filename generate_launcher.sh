@@ -47,7 +47,7 @@ while IFS= read -r line; do
     if [ -n "$php_file" ]; then
         PHP_PORT=$(cat "$PHP_PORT_FILE")
         php_badge="<span class=\"php-badge\">PHP :$PHP_PORT</span>"
-        href="__IDX_ORIGIN_${PHP_PORT}__/$line"
+        href="__IDX_ORIGIN_${PHP_PORT}__/"
         echo $((PHP_PORT + 1)) > "$PHP_PORT_FILE"
     fi
 
@@ -65,6 +65,13 @@ cat > "$LAUNCHER_FILE" <<EOF
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Launcher</title>
     <link rel="stylesheet" href="$CSS_FILE">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/sql/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
 </head>
 <body>
     <h1>Launcher</h1>
@@ -73,20 +80,24 @@ cat > "$LAUNCHER_FILE" <<EOF
         <button class="tab-btn" data-tab="database">Database</button>
     </div>
     <div id="tab-projects" class="tab-content active">
-    <div class="filter-container">
-        <input type="text" id="nameFilter" placeholder="Filter by name...">
-        <input type="date" id="dateFilter">
-        <button id="sortButton">Newest</button>
-        <button id="refreshButton"> Refresh</button>
-    </div>
-    <ul id="linkList">
+        <div class="filter-container">
+            <input type="text" id="nameFilter" placeholder="Filter by name...">
+            <input type="date" id="dateFilter">
+            <button id="sortButton">Newest</button>
+            <button id="refreshButton"> Refresh</button>
+        </div>
+        <ul id="linkList">
 $(printf "%b" "$LINKS")
-    </ul>
-    </div>
+        </ul>
     </div>
     <div id="tab-database" class="tab-content">
+        <div class="db-selector-row">
+            <span class="db-selector-label">Database:</span>
+            <select id="dbSelect"><option value="">— select —</option></select>
+            <span id="dbStatus"></span>
+        </div>
         <div class="db-query-area">
-            <textarea id="sqlInput" rows="4" placeholder="SHOW DATABASES;&#10;SELECT * FROM mydb.users;"></textarea>
+            <textarea id="sqlInput" rows="4" placeholder="SELECT * FROM users;&#10;INSERT INTO users (name) VALUES ('Alice');"></textarea>
             <div style="display:flex;flex-direction:column;gap:0.5rem;">
                 <button id="runQuery">Run</button>
                 <button id="cheatBtn">? Cheat</button>
@@ -107,7 +118,6 @@ $(printf "%b" "$LINKS")
                 <div class="cheat-row"><span class="cheat-cmd">SHOW DATABASES;</span><span class="cheat-desc">List all databases</span></div>
                 <div class="cheat-row"><span class="cheat-cmd">CREATE DATABASE name;</span><span class="cheat-desc">Create a new database</span></div>
                 <div class="cheat-row"><span class="cheat-cmd">DROP DATABASE name;</span><span class="cheat-desc">Delete a database</span></div>
-                <div class="cheat-row"><span class="cheat-cmd">USE name;</span><span class="cheat-desc">Select a database</span></div>
             </div>
             <div class="cheat-section">
                 <h3>Tables</h3>

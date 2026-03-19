@@ -18,7 +18,7 @@
       "ritwickdey.liveserver"
       "bmewburn.vscode-intelephense-client"
     ];
-
+ 
     workspace = {
       onCreate = { };
       onStart = {
