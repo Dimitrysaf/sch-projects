@@ -101,6 +101,7 @@ $(printf "%b" "$LINKS")
             <div style="display:flex;flex-direction:column;gap:0.5rem;">
                 <button id="runQuery">Run</button>
                 <button id="cheatBtn">Commands</button>
+                <button id="refreshButton2">Refresh</button>
             </div>
         </div>
         <div id="queryResults"></div>
@@ -110,7 +111,7 @@ $(printf "%b" "$LINKS")
     <div class="modal-overlay" id="cheatOverlay">
         <div class="modal">
             <div class="modal-header">
-                <h2>MySQL Cheat Sheet</h2>
+                <h2>MySQL Commands</h2>
                 <button id="closeCheat">Close</button>
             </div>
             <div class="cheat-section">

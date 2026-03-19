@@ -39,8 +39,10 @@ function toggleSort() {
 }
 
 async function triggerRefresh() {
+    const rb2 = document.getElementById('refreshButton2');
     refreshButton.textContent = 'Running...';
     refreshButton.disabled = true;
+    if (rb2) { rb2.textContent = 'Running...'; rb2.disabled = true; }
     try {
         const res = await fetch('/refresh', { method: 'POST' });
         const data = await res.json();
@@ -50,11 +52,13 @@ async function triggerRefresh() {
             alert('Script failed:\n' + data.error);
             refreshButton.textContent = 'Refresh';
             refreshButton.disabled = false;
+            if (rb2) { rb2.textContent = ' Refresh'; rb2.disabled = false; }
         }
     } catch (err) {
         alert('Could not reach server. Is server.js running?\n\n' + err.message);
         refreshButton.textContent = 'Refresh';
         refreshButton.disabled = false;
+        if (rb2) { rb2.textContent = ' Refresh'; rb2.disabled = false; }
     }
 }
 
@@ -65,6 +69,7 @@ nameFilter.addEventListener('keyup', filterLinks);
 dateFilter.addEventListener('change', filterLinks);
 sortButton.addEventListener('click', toggleSort);
 refreshButton.addEventListener('click', triggerRefresh);
+document.getElementById('refreshButton2').addEventListener('click', triggerRefresh);
 
 document.querySelectorAll('.info-btn').forEach(button => {
     button.addEventListener('click', (e) => {

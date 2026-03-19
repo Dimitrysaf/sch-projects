@@ -1,9 +1,28 @@
-html {
-    scrollbar-width: none;
+/* ── Scrollbars ───────────────────────────────────────────────────────── */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #000 transparent;
 }
 
-html::-webkit-scrollbar {
-    display: none;
+*::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #000;
+    min-height: 6px;
+    min-width: 6px;
+    max-height: 6px;
+    max-width: 6px;
+}
+
+*::-webkit-scrollbar-corner {
+    background: transparent;
 }
 
 body {
@@ -13,7 +32,6 @@ body {
     padding: 2rem;
     background-color: #fff;
     color: #000;
-    -ms-overflow-style: none;
 }
 
 h1 {
@@ -81,7 +99,8 @@ small {
 }
 
 #sortButton,
-#refreshButton {
+#refreshButton,
+#refreshButton2 {
     padding: 0.5rem;
     border: 2px solid #000;
     background-color: #fff;
@@ -91,16 +110,19 @@ small {
 }
 
 #sortButton:focus,
-#refreshButton:focus {
+#refreshButton:focus,
+#refreshButton2:focus {
     outline: 2px solid #000;
 }
 
 #sortButton:hover,
-#refreshButton:hover {
+#refreshButton:hover,
+#refreshButton2:hover {
     outline: 2px dashed #000;
 }
 
-#refreshButton:disabled {
+#refreshButton:disabled,
+#refreshButton2:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     outline: none;
@@ -302,11 +324,6 @@ small {
     align-items: flex-start;
     padding: 2rem;
     overflow-y: auto;
-    scrollbar-width: none;
-}
-
-.modal-overlay::-webkit-scrollbar {
-    display: none;
 }
 
 .modal-overlay.open {
