@@ -13,12 +13,12 @@ try {
     // Set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Connected successfully to the database!";
+    echo "Connected successfully to the database!<br>";
 
-    // You can now execute queries, for example:
-    // $stmt = $pdo->query("SELECT VERSION()");
-    // $version = $stmt->fetchColumn();
-    // echo "<br>Database version: " . $version;
+    // Execute a SELECT query
+    $stmt = $pdo->query("SELECT VERSION()");
+    $version = $stmt->fetchColumn();
+    echo "Database version: " . $version;
 
 } catch(PDOException $e) {
     die("Connection failed: " . $e->getMessage());

@@ -47,7 +47,7 @@ while IFS= read -r line; do
     if [ -n "$php_file" ]; then
         PHP_PORT=$(cat "$PHP_PORT_FILE")
         php_badge="<span class=\"php-badge\">PHP :$PHP_PORT</span>"
-        href="__IDX_ORIGIN_${PHP_PORT}__/"
+        href="__IDX_ORIGIN_${PHP_PORT}__/$line"
         echo $((PHP_PORT + 1)) > "$PHP_PORT_FILE"
     fi
 
@@ -68,6 +68,11 @@ cat > "$LAUNCHER_FILE" <<EOF
 </head>
 <body>
     <h1>Launcher</h1>
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="projects">Projects</button>
+        <button class="tab-btn" data-tab="database">Database</button>
+    </div>
+    <div id="tab-projects" class="tab-content active">
     <div class="filter-container">
         <input type="text" id="nameFilter" placeholder="Filter by name...">
         <input type="date" id="dateFilter">
@@ -77,6 +82,17 @@ cat > "$LAUNCHER_FILE" <<EOF
     <ul id="linkList">
 $(printf "%b" "$LINKS")
     </ul>
+    </div>
+    </div>
+    <div id="tab-database" class="tab-content">
+        <div class="db-query-area">
+            <textarea id="sqlInput" rows="4" placeholder="SHOW DATABASES;&#10;SELECT * FROM mydb.users;"></textarea>
+            <button id="runQuery">Run</button>
+        </div>
+        <div id="queryResults"></div>
+        <hr class="db-divider">
+        <div id="dbTree"></div>
+    </div>
     <script>
     (function () {
         const hostname = window.location.hostname;
