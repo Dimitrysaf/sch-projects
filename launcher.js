@@ -80,7 +80,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        if (btn.dataset.tab === 'database') loadDbSelector();
+        if (btn.dataset.tab === 'database') {
+            editor.refresh();
+            loadDbSelector();
+        }
     });
 });
 
