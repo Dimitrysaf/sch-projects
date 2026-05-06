@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 window_test = Tk()
 
 a = Label(window_test, text="Hello Greece")
