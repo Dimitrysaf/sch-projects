@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Άσκηση 14 - Είδος Τριγώνου</title>
+</head>
+
+<body>
+    <form name="myForm" onsubmit="typeOfTriangle();">
+        <fieldset>
+            <legend>Triangle calculator</legend>
+            <br />1st Angle:
+            <br /><input type="text" name="angle_1" /> degrees
+            <br />2nd Angle:
+            <br /><input type="text" name="angle_2" /> degrees
+            <br />3rd Angle:
+            <br /><input type="text" name="angle_3" /> degrees
+            <br />
+            <br /><input type="submit" name="btn_calculate" value="Get type">
+        </fieldset>
+    </form>
+</body>
+
+<script>
+    function typeOfTriangle() {
+        var JSangle1 = document.forms["myForm"]["angle_1"].value;
+        var JSangle2 = document.forms["myForm"]["angle_2"].value;
+        var JSangle3 = document.forms["myForm"]["angle_3"].value;
+
+        var JSangleSum = parseInt(JSangle1) + parseInt(JSangle2) + parseInt(JSangle3);
+
+        var isoplevro = JSangle1 == JSangle2 && JSangle1 == JSangle3;
+        var isoskeles = JSangle1 == JSangle2 || JSangle1 == JSangle3 || JSangle2 == JSangle3;
+
+        if (JSangleSum == 180) {
+            if (isoplevro == true) {
+                alert("Είναι ισόπλευρο");
+                console.log("Είναι ισόπλευρο");
+            }
+            else if (isoskeles == true) {
+                alert("Είναι ισοσκελές");
+                console.log("Είναι ισοσκελές");
+            }
+            else {
+                alert("Είναι σκαληνό");
+                console.log("Είναι σκαληνό");
+            };
+        }
+        else {
+            alert("Δεν είναι τρίγωνο!");
+            console.log("Δεν είναι τρίγωνο!");
+        };
+    }
+</script>
+
+</html>
