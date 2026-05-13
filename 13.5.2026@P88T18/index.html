@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Άσκηση 18 - Είσοδος στο σύστημα</title>
+</head>
+
+<body>
+    <form name="myForm" onsubmit="return validateForm();">
+        <fieldset>
+            <legend>Είσοδος χρήστη</legend>
+            <br />Όνομα χρήστη:
+            <br /><input type="text" name="username" value="">
+            <br />Κωδικός πρόσβασης:
+            <br /><input type="password" name="password" value="">
+            <br />
+            <br /><input type="submit" value="Είσοδος">
+        </fieldset>
+    </form>
+</body>
+
+<script>
+    function validateForm() {
+        //console.log(document.forms["myForm"]["username"].value);
+        //console.log(document.forms["myForm"]["password"].value);
+
+        let formUsername = document.forms["myForm"]["username"].value;
+        let formPassword = document.forms["myForm"]["password"].value;
+
+        if (formUsername == "" || formPassword == "") {
+            alert("Please fill out the form.");
+
+            //console.log(document.forms["myForm"]["username"].value);
+            //console.log(document.forms["myForm"]["password"].value);
+        }
+        if (formUsername == "DIMITRIOS" || formPassword == "12323456") {
+            alert("Your credentials were correct!");
+
+            //console.log(document.forms["myForm"]["username"].value);
+            //console.log(document.forms["myForm"]["password"].value);
+            return true;
+        }
+        else {
+            alert("Your credentials were incorrect!!");
+
+            //console.log(document.forms["myForm"]["username"].value);
+            //console.log(document.forms["myForm"]["password"].value);
+            return false;
+        }
+
+    }
+</script>
+
+</html>
