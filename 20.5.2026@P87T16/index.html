@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Temperature Converter</title>
+</head>
+
+<body>
+    <fieldset>
+        Degrees: <input type="number" id="tempInput" value="0" /><br /><br />
+        <input type="radio" id="CtoF" name="method" value="C->F" checked />
+        <label for="CtoF">C => F</label><br />
+        <input type="radio" id="FtoC" name="method" value="F->C" />
+        <label for="FtoC">F => C</label><br /><br />
+
+        <input type="button" value="Convert" onclick="convert()" />
+    </fieldset>
+    <p>Results:</p>
+    <h1 id="result"></h1>
+
+    <script>
+        function convert() {
+            let value = Number(document.getElementById("tempInput").value);
+            let resultHTML = document.getElementById("result");
+            let isCtoF = document.getElementById("CtoF").checked;
+
+            if (isCtoF) {
+                let fahrenheit = (value * 1.8) + 32;
+                resultHTML.textContent = fahrenheit + " °F";
+            } else {
+                let celsius = (value - 32) / 1.8;
+                resultHTML.textContent = celsius + " °C";
+            }
+        }
+    </script>
+</body>
+
+</html>
